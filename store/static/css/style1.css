@@ -1,0 +1,173 @@
+body{
+  margin: 0;
+  font-weight: 400;
+  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  /* color: #212529; */
+  /* text-align: left; */
+  /* color: #fff; */
+
+}
+
+.content{
+  margin: 0px 206px;
+}
+
+.okno{
+  width: 80%;
+  height: 60%;
+  margin: 0 auto;
+}
+
+
+h1{
+  color: black;
+  font-size: 30px;
+  font-family: serif;
+}
+
+h2{
+  font-size: 25px;
+  font-weight: 400;
+}
+h3{
+  font-size: 20px;
+}
+
+
+
+a{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+p{
+  font-size: 16px;
+}
+
+.header{
+  display: flex;
+  background: #364e446e;
+  height: 60px;
+  padding: 20px;
+  justify-content: space-around;
+
+}
+
+.menu{
+  display: flex;
+  align-items: center;
+}
+
+.menu a{
+  color: black;
+  margin: 0px 10px;
+}
+
+.portfile{
+  position: relative;
+  display: inline-block;
+}
+
+.menu-portfile{
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.menu-portfile li{
+  color: black;
+  padding: 10px 10px;
+  display: block;
+}
+
+.portfile:hover .menu-portfile{
+  display: block;
+}
+
+.home-page{
+  min-height: 635px;
+  background-image: url('../img/slider4.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.block{
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin: 96px 302px;
+  width: 434px;
+  height: 183px;
+}
+
+.block h2{
+  margin: 20px 0px;
+}
+
+.block a{
+  margin: 20px 0px;
+}
+
+.button{
+  display: block;
+  height: 50px;
+  padding: 15px;
+  background: #222222;
+  color: #fff;
+}
+
+.block-products{
+  display: flex;
+}
+
+.category{
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0;
+  width: 200px;
+
+}
+
+.category a{
+  color: black;
+  font-weight: 400;
+  font-size: 16px;
+  display: block;
+  border: 1px solid rgba(0,0,0,.125);
+  padding: 15px;
+}
+
+.products{
+  display: flex;
+  margin: 20px 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+
+.card{
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,.125);
+  margin: 30px 0px;
+}
+
+.imagecard img{
+  width: 250px;
+  height: 250px;
+}
+
+.card a{
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
