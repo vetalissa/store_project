@@ -3,62 +3,61 @@
 
 {% block content %}
 <div class="container">
-      <div class="catalog okno">
+    <div class="catalog okno">
         <div class="category">
-          <a href="#">Категория</a>
-          <a href="#">Категория</a>
-          <a href="#">Категория</a>
-          <a href="#">Категория</a>
-          <a href="#">Категория</a>
+            <a href="{% url 'products:catalog' %}">Все товары</a>
+            {% for category in categories %}
+            <a href="{% url 'products:category' category.id %}">{{ category.name }}</a>
+            {% endfor %}
         </div>
 
         <div class="pipa">
-          <div class="products">
-            {% for product in object_list %}
-            <div class="card">
-              <div class="card-img">
-                <img src="{{ product.image.url }}" alt="">
-              </div>
-              <div class="card-okno">
-                <h3 style="font-weight: 500;">{{ product.name }}</h3>
-                <h3 style="text-align: center;align-items: center;margin: 5px;font-size: 14px;">
-                  {{ product.description|truncatechars:100 }}
-                </h3>
-                <h4>{{ product.price }} руб.</h4>
-              </div>
+            <div class="products">
+                {% for product in object_list %}
+                <div class="card">
+                    <div class="card-img">
+                        <img src="{{ product.image.url }}" alt="">
+                    </div>
+                    <div class="card-okno">
+                        <h3 style="font-weight: 500;">{{ product.name }}</h3>
+                        <h3 style="text-align: center;align-items: center;margin: 5px;font-size: 14px;">
+                            {{ product.description|truncatechars:100 }}
+                        </h3>
+                        <h4>{{ product.price }} руб.</h4>
+                    </div>
 
-              <a href="#" class="button card-button"> Купить </a>
+                    <a href="#" class="button card-button"> Купить </a>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-          </div>
 
-          {% if is_paginated %}
-          <div class="pagination">
-            <ul>
-              <li>
-                <a href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }}
+            {% if is_paginated %}
+            <div class="pagination">
+                <ul>
+                    <li>
+                        <a href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }}
                          {% else %} # {% endif %}">
-                  Назад
-                </a>
-              </li>
-              {% for page in paginator.page_range %}
-              <li>
-                <a href="?page={{ page }}">
-                  {{ page }}
-                </a>
-              </li>
-              {% endfor %}
-              <li>
-                <a href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }}
+                            Назад
+                        </a>
+                    </li>
+                    {% for page in paginator.page_range %}
+                    <li>
+                        <a href="?page={{ page }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                    <li>
+                        <a href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }}
                          {% else %} # {% endif %}">
-                  Вперед
-                </a>
-              </li>
-            </ul>
-          </div>
+                            Вперед
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
         {% endif %}
-      </div>
-
     </div>
+
+</div>
 {% endblock %}
