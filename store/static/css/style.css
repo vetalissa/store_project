@@ -318,3 +318,16 @@ th,td {
   padding: 16px 56px 20px 19px;
   border-bottom: 1px solid #282828bd;
 }
+
+
+.errors{
+  width: 445px;
+  display: flex;
+  flex-direction: column;
+  background: #ff000029;
+  padding: 10px;
+}
+
+.errors h3{
+  font-size: 20px;
+}

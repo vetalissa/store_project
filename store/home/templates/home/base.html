@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="rus" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/setting_css.css' %}">
 
     <link rel="icon" type='img/png' href="{% static 'img/logo.png' %}">
     <title>{{ title }}</title>
-  </head>
-  <body>
+</head>
+<body>
 
-    <div class="container">
-      <div class="header">
+<div class="container">
+    <div class="header">
         <div class="header-menu okno">
-          <a href="base.html">
-            <h1>ROSELISSA</h1>
-          </a>
-
-          <div class="menu">
-            <a href="products.html"> Католог </a>
-            <a href="login.html"> Войти </a>
-
-            <a href="basket.html">
-              <img src="{% static 'img/icons/basket.png' %}" alt="Корзина"  width="30" height="30">
+            <a href="{% url 'home' %}">
+                <h1>ROSELISSA</h1>
             </a>
-            <div class="portfile">
-              <img src="{% static 'img/icons/user.png' %}" width="20" height="20" alt="Профиль">
-              <ul class='menu-portfile'>
-                <li> <a href="profile.html">Профиль</a></li>
-                <li><a href="orders.html"> Заказы </a></li>
-                <li><a href="#"> Админ-панель </a></li>
-                <li><a href="#"> Выйти </a></li>
-              </ul>
+
+            <div class="menu">
+                <a href="{% url 'products:catalog' %}"> Католог </a>
+
+                {% if user.is_authenticated %}
+                <a href="basket.html">
+                    <img src="{% static 'img/icons/basket.png' %}" alt="Корзина" width="30" height="30">
+                </a>
+                <div class="portfile">
+                    <img src="{% static 'img/icons/user.png' %}" width="20" height="20" alt="Профиль">
+                    <ul class='menu-portfile'>
+                        <li><a href="profile.html">Профиль</a></li>
+                        <li><a href="orders.html"> Заказы </a></li>
+                        <li><a href="{% url 'users:logout' %}"> Выйти </a></li>
+                        {% if user.is_superuser or user.is_staff %}
+                        <li><a href="{% url 'admin:index' %}"> Админ-панель </a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% else %}
+                <a href="{% url 'users:login' %}"> Войти </a>
+                <a href="{% url 'users:register' %}"> Регистрация </a>
+                {% endif %}
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <div class="container">
-      {% block content %} {% endblock %}
-    </div>
+<div class="container">
+    {% block content %} {% endblock %}
+</div>
 
-  </body>
+</body>
 </html>
