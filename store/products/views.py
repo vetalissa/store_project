@@ -12,7 +12,7 @@ class ProductsView(TemplateView):
 
 class ProductListView(TitleMixin, ListView):
     template_name = 'products/products.html'
-    title = 'Католог'
+    title = 'Каталог'
     model = Product
     paginate_by = 3
 

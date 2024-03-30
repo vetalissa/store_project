@@ -1,0 +1,1 @@
+[{"model": "products.productcategory", "pk": 1, "fields": {"name": "Растения", "description": ""}}, {"model": "products.productcategory", "pk": 2, "fields": {"name": "Горшки", "description": ""}}, {"model": "products.productcategory", "pk": 3, "fields": {"name": "Кашпо", "description": ""}}]
