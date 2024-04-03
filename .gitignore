@@ -1,4 +1,5 @@
 venv/
+user_image/
 .idea/
 .flake8
 .env
