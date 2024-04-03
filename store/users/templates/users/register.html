@@ -7,7 +7,16 @@
         {% if form.errors %}
         <div class="errors">
             <h3 style="font-size:14px;">Ошибка:</h3>
-            <p>{{ form.errors }}</p>
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p>{{ error|escape }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% if form.non_field_errors %}
+                <p>{{ form.non_field_errors }}</p>
+            {% endif %}
         </div>
         {% endif %}
         <form action="{% url 'users:register' %}" method="post">
@@ -37,11 +46,7 @@
                 {{ form.password2 }}
             </div>
             <button type="submit" name="button" class="button">Регистрация</button>
-
-
         </form>
-
-
         <p>Есть аккаунта?
             <a href="{% url 'users:login' %}"> Вход </a></p>
     </div>
