@@ -28,7 +28,7 @@
                 <div class="portfile">
                     <img src="{% static 'img/icons/user.png' %}" width="20" height="20" alt="Профиль">
                     <ul class='menu-portfile'>
-                        <li><a href="profile.html">Профиль</a></li>
+                        <li><a href="{% url 'users:profile' user.id %}">Профиль</a></li>
                         <li><a href="orders.html"> Заказы </a></li>
                         <li><a href="{% url 'users:logout' %}"> Выйти </a></li>
                         {% if user.is_superuser or user.is_staff %}

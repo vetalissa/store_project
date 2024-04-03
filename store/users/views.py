@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 
 from common.view import TitleMixin
-from users.forms import UserLoginForm, UserRegisterForm
+from users.forms import UserLoginForm, UserProfileForm, UserRegisterForm
 from users.models import User
 
 
@@ -26,3 +26,13 @@ class UserRegisterView(TitleMixin, CreateView):
         valid = super(UserRegisterView, self).form_valid(form)
         login(self.request, self.object)
         return valid
+
+
+class UserProfileView(TitleMixin, UpdateView):
+    template_name = 'users/profile.html'
+    form_class = UserProfileForm
+    model = User
+    title = 'Профиль'
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=(self.object.id,))

@@ -1,80 +1,39 @@
-<!DOCTYPE html>
-<html lang="rus" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/setting_css.css">
+{% extends 'home/base.html' %}
+{% load static %}
 
-    <link rel="icon" type='img/png' href="static/img/logo.png">
-    <title>Roselissa</title>
-  </head>
-  <body>
-
-    <div class="container">
-      <div class="header">
-        <div class="header-menu okno">
-          <a href="base.html">
-            <h1>ROSELISSA</h1>
-          </a>
-
-          <div class="menu">
-            <a href="products.html"> Католог </a>
-            <a href="login.html"> Войти </a>
-
-            <a href="basket.html">
-              <img src="static/img/icons/basket.png" alt="Корзина"  width="30" height="30">
-            </a>
-            <div class="portfile">
-              <img src="static/img/icons/user.png" width="20" height="20" alt="Профиль">
-              <ul class='menu-portfile'>
-                <li> <a href="profile.html">Профиль</a></li>
-                <li><a href="orders.html"> Заказы </a></li>
-                <li><a href="#"> Админ-панель </a></li>
-                <li><a href="#"> Выйти </a></li>
-              </ul>
-            </div>
-          </div>
+{% block content %}
+<div class="okno">
+    <div class="profile">
+        <div class="profile-img">
+            <img src="{% if user.image %}
+                        {{ user.image.url }}
+                      {% else %}
+                        {% static 'img/user.png' %}
+                      {% endif %}" class="img-profile" width="200">
         </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="okno">
-        <div class="profile">
-          <form class="" action="index.html" method="post">
-            <div class="profile-img">
-              <img src="static/img/user.png" width="200" alt="">
-              <div class="form-input">
-                <label for="">Изображение</label>
-                <input type="file" name="" value="" class="form-title">
-              </div>
-            </div>
-
+        <form class="" action="{% url 'users:profile' user.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="form-input">
-              <label for="">Имя</label>
-              <input type="text" name="" value="" class="form-title">
+                <label for="{{ form.image.id_for_label }}">Изображение</label>
+                {{ form.image }}
             </div>
             <div class="form-input">
-              <label for="">Фамилия</label>
-              <input type="text" name="" value="" class="form-title">
+                <label for="{{ form.image.id_for_label }}">Имя</label>
+                {{ form.first_name }}
             </div>
             <div class="form-input">
-              <label for="">Имя пользователя</label>
-              <input type="text" name="" value="" class="form-title" disabled>
+                <label for="{{ form.last_name.id_for_label }}">Фамилия</label>
+                {{ form.last_name }}
             </div>
             <div class="form-input">
-              <label for="">Почта</label>
-              <input type="email" name="" value="" class="form-title" disabled>
+                <label for="{{ form.username.id_for_label }}">Имя пользователя</label>
+                {{ form.username }}
+            </div>
+            <div class="form-input">
+                <label for="{{ form.email.id_for_label }}">Почта</label>
+                {{ form.email }}
             </div>
             <button type="submit" name="button" class="button">Сохранить</button>
-
-
-
-        </div>
-
-      </div>
     </div>
-
-
-  </body>
-</html>
+</div>
+{% endblock %}
