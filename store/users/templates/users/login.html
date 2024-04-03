@@ -1,5 +1,7 @@
 {% extends 'home/base.html' %}
+{% load socialaccount %}
 {% load static %}
+
 {% block content %}
 <div class="okno">
     <div class="forma-login">
@@ -8,14 +10,14 @@
         <div class="errors">
             <h3 style="font-size:14px;">Ошибка:</h3>
             {% for field in form %}
-                {% if field.errors %}
-                    {% for error in field.errors %}
-                        <p>{{ error|escape }}</p>
-                    {% endfor %}
-                {% endif %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <p>{{ error|escape }}</p>
+            {% endfor %}
+            {% endif %}
             {% endfor %}
             {% if form.non_field_errors %}
-                <p>{{ form.non_field_errors }}</p>
+            <p>{{ form.non_field_errors }}</p>
             {% endif %}
         </div>
         {% endif %}
@@ -30,12 +32,14 @@
                 {{ form.password }}
             </div>
             <button type="submit" name="button" class="button">Войти</button>
+            <div class="social-icon">
+                <a href="#"><img src="{% static '/img/social/google.png' %}" alt="google"></a>
+                <a href="#"><img src="{% static '/img/social/vk.png' %}" alt="vk"></a>
+                <a href="{% provider_login_url 'github' %}"><img src="{% static '/img/social/github.png' %}"
+                                                                 alt="github"></a>
+            </div>
         </form>
-        <div class="social-icon">
-            <a href="#"><img src="{% static '/img/social/google.png' %}" alt="google"></a>
-            <a href="#"><img src="{% static '/img/social/vk.png' %}" alt="vk"></a>
-            <a href="#"><img src="{% static '/img/social/github.png' %}" alt="github"></a>
-        </div>
+
         <p>Нет аккаунта?
             <a href="{% url 'users:register' %}"> Регистрация </a></p>
     </div>
