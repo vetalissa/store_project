@@ -4,6 +4,17 @@
 {% block content %}
 <div class="okno">
     <div class="profile">
+        {% if not user.if_verified_email %}
+        <div class="errors">
+            <h4>Почта не потверждена!</h4>
+            <h3 style="font-size:12px; margin:5px;">
+                Для того чтобы оформить заказ, нужно потвердить почту
+            </h3>
+            <h3 style="font-size:14px;">
+                <a href="{% url 'users:send_email' user.email %}">Повторно отправить письмо на почту</a>
+            </h3>
+        </div>
+        {% endif %}
         <div class="profile-img">
             <img src="{% if user.image %}
                         {{ user.image.url }}

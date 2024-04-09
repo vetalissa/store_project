@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+<div class="okno">
+    <div class="forma-login">
+        <h2>Подверждение почты</h2>
+        <h3 style="text-align: center; margin:10px;">
+            Ваша почта успешно подвержена, теперь вы можете оформить заказ.</h3>
+        <a href="{% url 'home' %}"> За покупками! </a>
+    </div>
+</div>
+{% endblock %}
