@@ -30,7 +30,7 @@ class UserRegisterView(TitleMixin, CreateView):
     def form_valid(self, form):
         valid = super(UserRegisterView, self).form_valid(form)
         login(self.request, self.object, backend='django.contrib.auth.backends.ModelBackend')
-        send_email(self.request, self.object.email)
+        send_email(self.request, self.object.id)
         return valid
 
 
@@ -42,6 +42,12 @@ class UserProfileView(TitleMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
+
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileView, self).get_context_data()
+        email_verify = EmailVerification.objects.filter(user=self.object)
+        context['email_verify'] = False if not email_verify.exists() else email_verify.first().is_expired()
+        return context
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
@@ -61,14 +67,14 @@ class EmailVerificationView(TitleMixin, TemplateView):
             return HttpResponseRedirect(reverse('home'))
 
 
-def send_email(request, email):
-    user = User.objects.get(email=email)
+def send_email(request, user_id):
+    user = User.objects.get(id=user_id)
     email_verification = EmailVerification.objects.filter(user=user)
     if email_verification.exists() and email_verification.last().is_expired():
         email_verification.last().send_email_verification()
     else:
         EmailVerification.objects.filter(user=user).delete()
-        expiration = now() + timedelta(hours=48)
+        expiration = now() + timedelta(minutes=2)
         new_email_verification = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
         new_email_verification.send_email_verification()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

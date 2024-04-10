@@ -13,5 +13,5 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/<int:pk>/', login_required(UserProfileView.as_view()), name='profile'),
     path('verification/<str:email>/<uuid:code>/', EmailVerificationView.as_view(), name='email_verification'),
-    path('verification/send_email/<str:email>/', send_email, name='send_email'),
+    path('verification/send_email/<int:user_id>/', send_email, name='send_email'),
 ]

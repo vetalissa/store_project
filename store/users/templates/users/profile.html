@@ -10,9 +10,15 @@
             <h3 style="font-size:12px; margin:5px;">
                 Для того чтобы оформить заказ, нужно потвердить почту
             </h3>
+            {% if not email_verify %}
             <h3 style="font-size:14px;">
-                <a href="{% url 'users:send_email' user.email %}">Повторно отправить письмо на почту</a>
+                <a href="{% url 'users:send_email' user.id %}">Повторно отправить письмо на почту</a>
             </h3>
+            {% else %}
+            <h3 style="font-size:14px;">
+                Письмо уже у вас на почте, повторить отправку через 5мин.
+            </h3>
+            {% endif %}
         </div>
         {% endif %}
         <div class="profile-img">
