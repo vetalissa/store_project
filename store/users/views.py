@@ -1,19 +1,15 @@
-import uuid
-from datetime import timedelta
-
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
-from django.shortcuts import HttpResponseRedirect, render
+from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.utils.timezone import now
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from common.view import TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegisterForm
 from users.models import EmailVerification, User
+from users.tasks import send_create_message
 
-# from users.tasks import send_create_message
 
 class UserLoginView(TitleMixin, LoginView):
     template_name = 'users/login.html'
@@ -53,7 +49,7 @@ class UserProfileView(TitleMixin, UpdateView):
 
 class EmailVerificationView(TitleMixin, TemplateView):
     template_name = 'users/email_verification.html'
-    title = 'Подверждение почты'
+    title = 'Подтверждение почты'
 
     def get(self, request, *args, **kwargs):
         code = kwargs['code']
@@ -69,14 +65,5 @@ class EmailVerificationView(TitleMixin, TemplateView):
 
 
 def send_email(request, user_id):
-    # send_create_message.delay(user_id)
-    # user = User.objects.get(id=user_id)
-    # email_verification = EmailVerification.objects.filter(user=user)
-    # if email_verification.exists() and email_verification.last().is_expired():
-    #     email_verification.last().send_email_verification()
-    # else:
-    #     EmailVerification.objects.filter(user=user).delete()
-    #     expiration = now() + timedelta(minutes=2)
-    #     new_email_verification = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-    #     new_email_verification.send_email_verification()
+    send_create_message.delay(user_id)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
