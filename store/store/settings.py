@@ -84,13 +84,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'store.wsgi.application'
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'localhost',
+]
+
 # Database
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'roselissa_bd',
-        'USER': 'rosselissa',
+        'NAME': 'store_db',
+        'USER': 'user_store',
         'PASSWORD': 'privet201101',
         'HOST': 'localhost',
         'PORT': '5432',

@@ -13,6 +13,7 @@ from common.view import TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegisterForm
 from users.models import EmailVerification, User
 
+# from users.tasks import send_create_message
 
 class UserLoginView(TitleMixin, LoginView):
     template_name = 'users/login.html'
@@ -68,13 +69,14 @@ class EmailVerificationView(TitleMixin, TemplateView):
 
 
 def send_email(request, user_id):
-    user = User.objects.get(id=user_id)
-    email_verification = EmailVerification.objects.filter(user=user)
-    if email_verification.exists() and email_verification.last().is_expired():
-        email_verification.last().send_email_verification()
-    else:
-        EmailVerification.objects.filter(user=user).delete()
-        expiration = now() + timedelta(minutes=2)
-        new_email_verification = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-        new_email_verification.send_email_verification()
+    # send_create_message.delay(user_id)
+    # user = User.objects.get(id=user_id)
+    # email_verification = EmailVerification.objects.filter(user=user)
+    # if email_verification.exists() and email_verification.last().is_expired():
+    #     email_verification.last().send_email_verification()
+    # else:
+    #     EmailVerification.objects.filter(user=user).delete()
+    #     expiration = now() + timedelta(minutes=2)
+    #     new_email_verification = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
+    #     new_email_verification.send_email_verification()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
