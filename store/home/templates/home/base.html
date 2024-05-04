@@ -22,7 +22,7 @@
                 <a href="{% url 'products:catalog' %}"> Католог </a>
 
                 {% if user.is_authenticated %}
-                <a href="basket.html">
+                <a href="{% url 'products:basket' user.id %}">
                     <img src="{% static 'img/icons/basket.png' %}" alt="Корзина" width="30" height="30">
                 </a>
                 <div class="portfile">

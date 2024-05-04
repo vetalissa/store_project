@@ -1,140 +1,46 @@
-<!DOCTYPE html>
-<html lang="rus" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/setting_css.css">
+{% include 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="okno">
+    <div class="basket">
+        <h2>Корзина {% if baskets %} {{ baskets.total_quantity }} товара {% else %} пуста {% endif %}</h2>
+        <div class="basket-cards">
+            {% for basket in baskets %}
+            <div class="basket-card">
+                <div class="description">
+                    <div class="">
+                        <img src="{{ basket.product.image.url }}" width="200" alt="">
+                    </div>
+                    <div class="opisanie">
+                        <h3>{{ basket.product.name }}</h3>
+                        <p>{{ basket.product.description }}</p>
+                        <p class='price-one'>{{ basket.product.price }}p./штука</p>
+                    </div>
+                </div>
 
-    <link rel="icon" type='img/png' href="static/img/logo.png">
-    <title>Login</title>
-  </head>
-  <body>
-
-    <div class="container">
-      <div class="header">
-        <div class="header-menu okno">
-          <a href="base.html">
-            <h1>ROSELISSA</h1>
-          </a>
-
-          <div class="menu">
-            <a href="products.html"> Католог </a>
-            <a href="login.html"> Войти </a>
-
-            <a href="basket.html">
-              <img src="static/img/icons/basket.png" alt="Корзина"  width="30" height="30">
-            </a>
-            <div class="portfile">
-              <img src="static/img/icons/user.png" width="20" height="20" alt="Профиль">
-              <ul class='menu-portfile'>
-                <li> <a href="profile.html">Профиль</a></li>
-                <li><a href="orders.html"> Заказы </a></li>
-                <li><a href="#"> Админ-панель </a></li>
-                <li><a href="#"> Выйти </a></li>
-              </ul>
+                <div class="basket-price">
+                    <h4 style="display: flex;align-items: center;">
+                        Количество:
+                        <a href="{% url 'products:basket_add'  basket.product.id %}">
+                            <h1>+</h1></a>
+                        {{ basket.quantity }}
+                        <a href="{% url 'products:basket_down'  basket.product.id %}">
+                            <h1>-</h1>
+                        </a>
+                    </h4>
+                    <h4><a href="{% url 'products:basket_deleted'  basket.id %}">удалить</a></h4>
+                    <h4>{{ basket.sum }} руб.</h4>
+                </div>
             </div>
-          </div>
+            {% endfor %}
+
         </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="okno">
-        <div class="basket">
-          <h2>Корзина</h2>
-
-          <div class="basket-cards">
-
-            <div class="basket-card">
-              <div class="description">
-                <div class="">
-                  <img src="static/img/product/product1.jpg" width="200"  alt="">
-                </div>
-                <div class="opisanie">
-                  <h3>Название</h3>
-                  <p>описание что то типо того ну хотябы не много текста,
-                  что бы ло понятно как это все будет выглдить наглядно. вот смотри
-                  примерно так будет.</p>
-                  <p class='price-one'>2 000p./штука</p>
-                </div>
-              </div>
-
-              <div class="basket-price">
-                <h4>Количетсво: 4</h4>
-                <h4>10 000 руб.</h4>
-              </div>
-            </div>
-            <div class="basket-card">
-              <div class="description">
-                <div class="">
-                  <img src="static/img/product/product1.jpg" width="200"  alt="">
-                </div>
-                <div class="opisanie">
-                  <h3>Название</h3>
-                  <p>описание что то типо того ну хотябы не много текста,
-                  что бы ло понятно как это все будет выглдить наглядно. вот смотри
-                  примерно так будет.</p>
-                  <p class='price-one'>2 000p./штука</p>
-                </div>
-              </div>
-
-              <div class="basket-price">
-                <h4>Количетсво: 4</h4>
-                <h4>10 000 руб.</h4>
-              </div>
-            </div>
-            <div class="basket-card">
-              <div class="description">
-                <div class="">
-                  <img src="static/img/product/product1.jpg" width="200"  alt="">
-                </div>
-                <div class="opisanie">
-                  <h3>Название</h3>
-                  <p>описание что то типо того ну хотябы не много текста,
-                  что бы ло понятно как это все будет выглдить наглядно. вот смотри
-                  примерно так будет.</p>
-                  <p class='price-one'>2 000p./штука</p>
-                </div>
-              </div>
-
-              <div class="basket-price">
-                <h4>Количетсво: 4</h4>
-                <h4>10 000 руб.</h4>
-              </div>
-            </div>
-            <div class="basket-card">
-              <div class="description">
-                <div class="">
-                  <img src="static/img/product/product1.jpg" width="200"  alt="">
-                </div>
-                <div class="opisanie">
-                  <h3>Название</h3>
-                  <p>описание что то типо того ну хотябы не много текста,
-                  что бы ло понятно как это все будет выглдить наглядно. вот смотри
-                  примерно так будет.</p>
-                  <p class='price-one'>2 000p./штука</p>
-                </div>
-              </div>
-
-              <div class="basket-price">
-                <h4>Количетсво: 4</h4>
-                <h4>10 000 руб.</h4>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="basket-result">
+        <div class="basket-result">
             <h3>Итог</h3>
-            <h4> 122 232 руб.</h4>
-          </div>
-
-          <a href="#" class="button"> Оформить заказ </a>
-
+            <h4> {{ baskets.total_sum }} руб.</h4>
         </div>
-
-      </div>
+        <a href="#" class="button"> Оформить заказ </a>
     </div>
 
-  </body>
-</html>
+</div>
+{% endblock %}

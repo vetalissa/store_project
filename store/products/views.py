@@ -1,13 +1,10 @@
-from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from common.view import TitleMixin
-from products.models import Product, ProductCategory
-
-
-class ProductsView(TemplateView):
-    template_name = 'products/products.html'
+from products.models import Basket, Product, ProductCategory
 
 
 class ProductListView(TitleMixin, ListView):
@@ -26,3 +23,30 @@ class ProductListView(TitleMixin, ListView):
         category_id = self.kwargs.get('category_id')
 
         return queryset.filter(category_id=category_id) if category_id else queryset
+
+
+class BasketListView(TitleMixin, TemplateView):
+    template_name = 'products/basket.html'
+    title = 'Корзина'
+
+
+@login_required
+def basket_add(request, product_id):
+    Basket.create_or_update(product_id=product_id, user=request.user)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def basket_down(request, product_id):
+    Basket.down_quantity(product_id=product_id, user=request.user)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def basket_deleted(request, basket_id):
+    basket = Basket.object.get(id=basket_id)
+    basket.delete()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
