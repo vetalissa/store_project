@@ -1,0 +1,31 @@
+{% include 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="okno">
+    <div class="one-product">
+        <div class="img-op">
+            <img src="{{ object.image.url}}" alt="">
+        </div>
+        <div class="text-op">
+            <h2>{{ object.name }}</h2>
+            <p class="card-text">{{ object.description }}</p>
+            <h4>{{ object.price }}руб.</h4>
+
+            <div class="button-op">
+                <a href="{% url 'products:basket_add'  object.id %}" class="button card-button b-op"> Купить </a>
+
+                {% for basket in baskets %}
+                {% if object == basket.product %}
+                <div class="count_buttons">
+                    <a href="{% url 'products:basket_add'  object.id %}" class="button_count"> + </a>
+                    <h1 style="padding: 15px; margin-top: 7px;">{{basket.quantity}}</h1>
+                    <a href="{% url 'products:basket_down'  object.id %}" class="button_count"> - </a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

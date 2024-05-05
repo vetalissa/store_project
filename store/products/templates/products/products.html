@@ -19,7 +19,7 @@
                         <img src="{{ product.image.url }}" alt="">
                     </div>
                     <div class="card-okno">
-                        <h3 style="font-weight: 500;">{{ product.name }}</h3>
+                        <h3 style="font-weight: 500;"><a href="{% url 'products:product' product.id %}">{{ product.name }}</a></h3>
                         <h3 style="text-align: center;align-items: center;margin: 5px;font-size: 14px;">
                             {{ product.description|truncatechars:100 }}
                         </h3>

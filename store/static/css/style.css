@@ -346,6 +346,7 @@ th,td {
 .count_buttons { 
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 
 .button_count {
@@ -353,4 +354,47 @@ th,td {
   background: #16593b;
   color: #fff;
   width: max-content;
+}
+
+.one-product{
+  display: flex;
+  margin: 0 auto;
+  margin-top: 35px;
+  padding: 30px;
+  width: 70%;
+  border: 1px solid rgba(0, 0, 0, .125);
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.img-op{
+  width: 500px;
+
+}
+
+.text-op{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 40%;
+  margin: 40px;
+}
+
+.text-op h2, p, h4{
+  margin-bottom: 40px;
+}
+
+.button-op{
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.b-op{
+  min-width: 100%;
+  align-items: center;
+  text-align: center;
 }

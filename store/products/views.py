@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from common.view import TitleMixin
@@ -23,6 +24,16 @@ class ProductListView(TitleMixin, ListView):
         category_id = self.kwargs.get('category_id')
 
         return queryset.filter(category_id=category_id) if category_id else queryset
+
+
+class ProductDetailView(DetailView):
+    template_name = 'products/one_product.html'
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['title'] = self.object.name
+        return context
 
 
 class BasketListView(TitleMixin, TemplateView):
