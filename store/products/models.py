@@ -1,6 +1,9 @@
 from django.db import models
 
 from users.models import User
+from django import template
+
+register = template.Library()
 
 
 class ProductCategory(models.Model):
@@ -27,8 +30,8 @@ class BasketQuerySet(models.QuerySet):
     def total_quantity(self):
         return sum(basket.quantity for basket in self)
 
-    def product_in(self, product_id):
-        return True if self.object.filter(product_id=product_id) else False
+    # def product_in(self, product_id):
+    #     return True if self.object.filter(product_id=product_id) else False
 
 
 class Basket(models.Model):
