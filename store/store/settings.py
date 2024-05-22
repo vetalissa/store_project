@@ -1,20 +1,52 @@
 from pathlib import Path
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool),
+    SECRET_KEY=(str),
+    DOMAIN_NAME=(str),
+
+    DATABASE_NAME=(str),
+    DATABASE_USER=(str),
+    DATABASE_PASSWORD=(str),
+    DATABASE_HOST=(str),
+    DATABASE_PORT=(str),
+
+    EMAIL_HOST=(str),
+    EMAIL_PORT=(int),
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str),
+    EMAIL_USE_SSL=(bool),
+
+    CELERY_BROKER_URL=(str),
+    CELERY_RESULT_BACKEND=(str),
+
+    STRIPE_PUBLIC_KEY=(str),
+    STRIPE_SECRET_KEY=(str),
+    STRIPE_WEBHOOK_SECRET=(str),
+
+    REDIS_HOST=(str),
+    REDIS_PORT=(str),
+
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+environ.Env.read_env(BASE_DIR / '.env')
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%g$1$u=777x&*mgmu=6ilxek5h13#ly$x96_-d^c*@ip=v2pdt'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
-DOMAIN_NAME = 'http://127.0.0.1:8000/'
+DOMAIN_NAME = env('DOMAIN_NAME')
 
 # Application definition
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,11 +113,11 @@ INTERNAL_IPS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store_db',
-        'USER': 'user_store',
-        'PASSWORD': 'privet201101',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -157,17 +189,21 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # EmailVerification
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'testakkforpy@yandex.ru'
-EMAIL_HOST_PASSWORD = 'cezxsvlsjmahcpxa'
-EMAIL_USE_SSL = True
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
 # Celery
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
 
 # Stripe
-STRIPE_PUBLIC_KEY = 'pk_test_51O1RWMEA5WAJRF9mNnKz2Z9XokMfyPzdoNdveYUzkqunvfK0Z4nXMRAazvjjHahqk0rXAI8HapOdXjHx2Ifr5x6g00rnnkHziQ'
-STRIPE_SECRET_KEY = 'sk_test_51O1RWMEA5WAJRF9mONHPOxxnHpmec7G3Z1Hg8ygRSJTXVMZ5Q1eTn2mKCV1K9GygKIoj6aWx31vMcKIcM7kFcMyW00RX6O7vAs'
-STRIPE_WEBHOOK_SECRET = 'whsec_2574c6d882e450bbea2e87c2a666742e66d64fea36d1955c2f578bf4eb7ad040'
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
+
+# Redis
+REDIS_HOST = env('REDIS_HOST')
+REDIS_PORT = env('REDIS_PORT')
