@@ -1,15 +1,17 @@
-from django.shortcuts import render, reverse, HttpResponseRedirect, HttpResponse
 from http import HTTPStatus
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.views.generic.base import TemplateView
-from orders.models import Order
-from common.view import TitleMixin
-from orders.forms import OrderForm
-from django.conf import settings
 
 import stripe
+from django.conf import settings
+from django.shortcuts import (HttpResponse, HttpResponseRedirect, reverse)
+from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
+
+from common.view import TitleMixin
+from orders.forms import OrderForm
+from orders.models import Order
+from products.models import Basket
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -23,15 +25,10 @@ class OrderCreateView(TitleMixin, CreateView):
 
     def post(self, request, *args, **kwargs):
         super(OrderCreateView, self).post(request, *args, **kwargs)
+        baskets = Basket.object.filter(user=self.request.user)
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': 'price_1PG1XwEA5WAJRF9m7vnCwzer',
-                    'quantity': 1,
-                },
-            ],
-            methadata={'order_id': self.object.id},
+            line_items=baskets.stripe_products(),
+            metadata={'order_id': self.object.id},
             mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_cancel')),

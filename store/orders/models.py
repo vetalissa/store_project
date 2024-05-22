@@ -22,7 +22,5 @@ class Order(models.Model):
     status = models.PositiveSmallIntegerField(default=CREATED, choices=STATUSES)
     basket_history = models.JSONField(default=dict)
 
-
     def __str__(self):
         return f'Заказ #{self.id}. {self.initiator}'
-
