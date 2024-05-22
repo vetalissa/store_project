@@ -14,26 +14,17 @@
             </tr>
             </thead>
             <tbody>
-
+            {% for order in object_list %}
             <tr>
-                <th scope="row">36</th>
-                <td>Оплачен</td>
-                <td>2 месяца назад</td>
-                <td>88 462,0 руб.</td>
+                <th scope="row">{{ order.id }}</th>
+                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.date_create }}</td>
+                <td>{{ order.basket_history.total_sum}}руб.</td>
                 <td>
-                    <a href="#">просмотреть</a>
+                    <a href="{% url 'orders:order_detail' order.id %}">просмотреть</a>
                 </td>
             </tr>
-
-            <tr>
-                <th scope="row">37</th>
-                <td>Оплачен</td>
-                <td>2 месяца назад</td>
-                <td>115 523,0 руб.</td>
-                <td>
-                    <a href="#">просмотреть</a>
-                </td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
 

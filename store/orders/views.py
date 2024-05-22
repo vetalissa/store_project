@@ -6,7 +6,9 @@ from django.shortcuts import HttpResponse, HttpResponseRedirect, reverse
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic.list import ListView
 
 from common.view import TitleMixin
 from orders.forms import OrderForm
@@ -74,6 +76,27 @@ def fulfill_order(session):
     order_id = int(session.metadata.order_id)
     order = Order.objects.get(id=order_id)
     order.order_update_after_payment()
+
+
+class OrderListView(TitleMixin, ListView):
+    template_name = 'orders/orders.html'
+    title = 'Заказы'
+    queryset = Order.objects.all()
+    ordering = ('-date_create',)
+
+    def get_queryset(self):
+        queryset = super(OrderListView, self).get_queryset()
+        return queryset.filter(initiator=self.request.user)
+
+
+class OrderDetailView(DetailView):
+    template_name = 'orders/order.html'
+    model = Order
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context['title'] = f'#{self.object.id}'
+        return context
 
 
 class SuccessTemplateView(TitleMixin, TemplateView):
