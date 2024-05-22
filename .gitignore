@@ -4,3 +4,4 @@ user_image/
 .flake8
 .env
 *.sqlite3
+stripe
