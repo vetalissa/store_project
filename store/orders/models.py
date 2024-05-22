@@ -1,6 +1,6 @@
 from django.db import models
 
-from products.models import Basket
+from products.models import Basket, Product
 from users.models import User
 
 
@@ -28,6 +28,7 @@ class Order(models.Model):
 
     def order_update_after_payment(self):
         baskets = Basket.object.filter(user=self.initiator)
+        self.change_count(baskets)
         self.status = self.PAID
         self.basket_history = {
             'purchased_items': [basket.de_json() for basket in baskets],
@@ -35,3 +36,11 @@ class Order(models.Model):
         }
         baskets.delete()
         self.save()
+
+    @staticmethod
+    def change_count(basket):
+        for product_in_basket in basket:
+            count = product_in_basket.quantity
+            product = Product.objects.get(id=product_in_basket.product.id)
+            product.quantity -= count
+            product.save()

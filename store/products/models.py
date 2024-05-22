@@ -87,8 +87,10 @@ class Basket(models.Model):
             Basket.object.create(user=user, product_id=product_id, quantity=1)
         else:
             basket = basket.first()
-            basket.quantity += 1
-            basket.save()
+            product_count = Product.objects.filter(id=product_id).first().quantity
+            if basket.quantity + 1 <= product_count:
+                basket.quantity += 1
+                basket.save()
 
     @classmethod
     def down_quantity(cls, product_id, user):

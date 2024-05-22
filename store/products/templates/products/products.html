@@ -14,6 +14,7 @@
         <div class="pipa">
             <div class="products">
                 {% for product in object_list %}
+                {% if product.quantity != 0 %}
                 <div class="card">
                     <div class="card-img">
                         <img src="{{ product.image.url }}" alt="">
@@ -38,6 +39,7 @@
                     {% endif %}
                     {% endfor %}
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
 

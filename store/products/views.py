@@ -12,7 +12,7 @@ class ProductListView(TitleMixin, ListView):
     template_name = 'products/products.html'
     title = 'Каталог'
     model = Product
-    paginate_by = 3
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data()
