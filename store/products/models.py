@@ -100,3 +100,12 @@ class Basket(models.Model):
             basket = basket.first()
             basket.quantity -= 1
             basket.save()
+
+    def de_json(self):
+        basket_items = {
+            'product_name': self.product.name,
+            'quantity': self.quantity,
+            'price': float(self.product.price),
+            'sum': float(self.sum())
+        }
+        return basket_items

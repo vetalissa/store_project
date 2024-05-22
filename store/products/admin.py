@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product, ProductCategory
+from products.models import Basket, Product, ProductCategory
 
 
 @admin.register(Product)
@@ -15,3 +15,10 @@ class ProductAdmin(admin.ModelAdmin):
 class ProductCategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     fields = ('name', 'description')
+
+
+class BasketAdmin(admin.TabularInline):
+    model = Basket
+    fields = ('product', 'quantity', 'created_timestamp')
+    readonly_fields = ('created_timestamp',)
+    extra = 0
