@@ -39,7 +39,7 @@
             <h3>Итог</h3>
             <h4> {{ baskets.total_sum }} руб.</h4>
         </div>
-        <a href="#" class="button"> Оформить заказ </a>
+        <a href="{% url 'orders:order_create' %}" class="button"> Оформить заказ </a>
     </div>
 
 </div>

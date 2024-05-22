@@ -398,3 +398,30 @@ th,td {
   align-items: center;
   text-align: center;
 }
+
+.order-decor{
+  flex-direction: column;
+  align-items: center;
+}
+
+.order-sum{
+  margin: 50px;
+}
+
+.order-basket{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 35px;
+  padding: 30px;
+  width: 70%;
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.order-basket-cards{
+  display: flex;
+  flex-direction: column;
+    width: 80%;
+}
