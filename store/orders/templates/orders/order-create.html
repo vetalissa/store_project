@@ -1,0 +1,47 @@
+{% include 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="okno">
+    <div class="order-basket">
+        <h2>Оформление заказа</h2>
+
+        <div class="order-basket-cards">
+            {% for basket in baskets %}
+            <div class="basket-card">
+                <div class="description">
+                    <div class="">
+                        <img src="{{ basket.product.image.url }}" width="80">
+                    </div>
+                    <div class="opisanie">
+                        <h3>{{ basket.product.name }}</h3>
+                        <p class='price-one'>{{ basket.product.price }}p./штука</p>
+                    </div>
+                </div>
+
+                <div class="basket-price">
+                    <h4>Количество: {{basket.quantity }}</h4>
+                    <h4>{{ basket.sum }} руб.</h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="basket-result" style="width: 80%;">
+            <h3>Итог</h3>
+            <h4> {{ baskets.total_sum }} руб.</h4>
+        </div>
+
+        <form action="{% url 'orders:order_create' %}" method="post" style="width: 80%;">
+            {% csrf_token %}
+            <div class="form-input">
+                <label for="address"> Адрес </label>
+                <input type="text" name="address"  class="form-title" style="width: 100%;">
+            </div>
+            <button type="submit" name="button" class="button">Оплатить</button>
+        </form>
+
+
+    </div>
+
+</div>
+{% endblock %}

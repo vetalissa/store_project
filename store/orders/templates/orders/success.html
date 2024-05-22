@@ -1,0 +1,10 @@
+{% include 'home/base.html' %}
+
+{% block content %}
+<div class="okno">
+    <div class="order-basket">
+        <h2>Ваш заказ успешно оформлен!</h2>
+        <a href="{% url 'home' %}" class="button" style="margin: 50px;"> На главную страницу...</a>
+    </div>
+</div>
+{% endblock %}
