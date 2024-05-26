@@ -2,7 +2,6 @@ from pathlib import Path
 import environ
 
 env = environ.Env(
-    # set casting, default value
     DEBUG=(bool),
     SECRET_KEY=(str),
     DOMAIN_NAME=(str),
@@ -62,11 +61,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'rest_framework',
 
     'home',
     'orders',
     'products',
     'users',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -207,3 +208,9 @@ STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 # Redis
 REDIS_HOST = env('REDIS_HOST')
 REDIS_PORT = env('REDIS_PORT')
+
+# Django REST framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
+}
