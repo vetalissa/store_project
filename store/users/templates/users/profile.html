@@ -4,13 +4,13 @@
 {% block content %}
 <div class="okno">
     <div class="profile">
-        {% if not user.if_verified_email %}
+        {% if not user.is_verified_email %}
         <div class="errors">
             <h4>Почта не подтверждена!</h4>
             <h3 style="font-size:12px; margin:5px;">
                 Для того чтобы оформить заказ, нужно потвердеть почту
             </h3>
-            {% if not email_verify %}
+            {% if not email_again_send %}
             <h3 style="font-size:14px;">
                 <a href="{% url 'users:send_email' user.id %}">Повторно отправить письмо на почту</a>
             </h3>

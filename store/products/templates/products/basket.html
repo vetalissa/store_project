@@ -2,24 +2,8 @@
 {% load static %}
 {% block content %}
 <div class="okno">
-    {% if not user.if_verified_email and not user.is_superuser or not user.is_staff %}
-    <div class="errors">
-            <h4>Почта не подтверждена!</h4>
-            <h3 style="font-size:12px; margin:5px;">
-                Для того чтобы оформить заказ, нужно потвердеть почту
-            </h3>
-            {% if not email_verify %}
-            <h3 style="font-size:14px;">
-                <a href="{% url 'users:send_email' user.id %}">Повторно отправить письмо на почту</a>
-            </h3>
-            {% else %}
-            <h3 style="font-size:14px;">
-                Письмо уже у вас на почте, повторить отправку через 5мин.
-            </h3>
-            {% endif %}
-        </div>
-    {% else %}
     <div class="basket">
+        {% if user.is_verified_email or user.is_superuser or user.is_staff %}
         <h2>Корзина {% if baskets %} {{ baskets.total_quantity }} товара {% else %} пуста {% endif %}</h2>
         <div class="basket-cards">
             {% for basket in baskets %}
@@ -57,7 +41,23 @@
             <h4> {{ baskets.total_sum }} руб.</h4>
         </div>
         <a href="{% url 'orders:order_create' %}" class="button"> Оформить заказ </a>
+        {% else %}
+        <div class="errors">
+            <h4>Почта не подтверждена!</h4>
+            <h3 style="font-size:12px; margin:5px;">
+                Для того чтобы оформить заказ, нужно потвердеть почту
+            </h3>
+            {% if not email_again_send %}
+            <h3 style="font-size:14px;">
+                <a href="{% url 'users:send_email' user.id %}">Повторно отправить письмо на почту</a>
+            </h3>
+            {% else %}
+            <h3 style="font-size:14px;">
+                Письмо уже у вас на почте, повторить отправку через 5мин.
+            </h3>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </div>
 {% endblock %}

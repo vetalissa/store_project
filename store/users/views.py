@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
-from common.view import TitleMixin
+from common.view import EmailAgainSendMixin, TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegisterForm
 from users.models import EmailVerification, User
 from users.tasks import send_create_message
@@ -31,7 +31,7 @@ class UserRegisterView(TitleMixin, CreateView):
         return valid
 
 
-class UserProfileView(TitleMixin, UpdateView):
+class UserProfileView(TitleMixin, EmailAgainSendMixin, UpdateView):
     template_name = 'users/profile.html'
     form_class = UserProfileForm
     model = User
@@ -39,12 +39,6 @@ class UserProfileView(TitleMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
-
-    def get_context_data(self, **kwargs):
-        context = super(UserProfileView, self).get_context_data()
-        email_verify = EmailVerification.objects.filter(user=self.object)
-        context['email_verify'] = False if not email_verify.exists() else email_verify.first().is_expired()
-        return context
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
@@ -57,7 +51,7 @@ class EmailVerificationView(TitleMixin, TemplateView):
         email_verification = EmailVerification.objects.filter(code=code, user=user)
 
         if email_verification.exists() and email_verification.first().is_expired():
-            user.if_verified_email = True
+            user.is_verified_email = True
             user.save()
             return super(EmailVerificationView, self).get(request, *args, **kwargs)
         else:

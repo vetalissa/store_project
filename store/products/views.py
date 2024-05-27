@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
-from common.view import TitleMixin
+from common.view import EmailAgainSendMixin, TitleMixin
 from products.models import Basket, Product, ProductCategory
 
 
@@ -36,7 +36,7 @@ class ProductDetailView(DetailView):
         return context
 
 
-class BasketListView(TitleMixin, TemplateView):
+class BasketListView(TitleMixin, EmailAgainSendMixin, TemplateView):
     template_name = 'products/basket.html'
     title = 'Корзина'
 
