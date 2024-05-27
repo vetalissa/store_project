@@ -20,15 +20,14 @@
                         <img src="{{ product.image.url }}" alt="">
                     </div>
                     <div class="card-okno">
-                        <h3 style="font-weight: 500;"><a href="{% url 'products:product' product.id %}">{{ product.name }}</a></h3>
+                        <h3 style="font-weight: 500;"><a href="{% url 'products:product' product.id %}">{{ product.name
+                            }}</a></h3>
                         <h3 style="text-align: center;align-items: center;margin: 5px;font-size: 14px;">
                             {{ product.description|truncatechars:100 }}
                         </h3>
                         <h4>{{ product.price }} руб.</h4>
                     </div>
-                    <a href="{% url 'products:basket_add'  product.id %}" class="button card-button"> Купить </a>
-
-
+                    {% if product in basket_list %}
                     {% for basket in baskets %}
                     {% if product == basket.product %}
                     <div class="count_buttons">
@@ -38,6 +37,9 @@
                     </div>
                     {% endif %}
                     {% endfor %}
+                    {% else %}
+                    <a href="{% url 'products:basket_add'  product.id %}" class="button card-button b-op"> Купить </a>
+                    {% endif %}
                 </div>
                 {% endif %}
                 {% endfor %}

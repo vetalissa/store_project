@@ -7,14 +7,15 @@
         <div class="img-op">
             <img src="{{ object.image.url}}" alt="">
         </div>
-        <div class="text-op">
+        <div class="text-op" style="padding:100px;">
             <h2>{{ object.name }}</h2>
             <p class="card-text">{{ object.description }}</p>
             <h4>{{ object.price }}руб.</h4>
 
             <div class="button-op">
-                <a href="{% url 'products:basket_add'  object.id %}" class="button card-button b-op"> Купить </a>
 
+
+                {% if object in basket_list %}
                 {% for basket in baskets %}
                 {% if object == basket.product %}
                 <div class="count_buttons">
@@ -24,6 +25,11 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+                {% else %}
+                <a href="{% url 'products:basket_add'  object.id %}" class="button card-button b-op"> Купить </a>
+                {% endif %}
+
+
             </div>
         </div>
     </div>
