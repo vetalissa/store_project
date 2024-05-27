@@ -18,7 +18,7 @@ class ProductCategory(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='products_image')
+    image = models.ImageField(upload_to='products_image', blank=True, null=True)
     quantity = models.PositiveIntegerField(default=0)
     price = models.DecimalField(max_digits=50, decimal_places=2)
     stripe_product_price_id = models.CharField(max_length=128, blank=True, null=True)
@@ -84,13 +84,17 @@ class Basket(models.Model):
         basket = Basket.object.filter(user=user, product_id=product_id)
 
         if not basket.exists():
-            Basket.object.create(user=user, product_id=product_id, quantity=1)
+            obj = Basket.object.create(user=user, product_id=product_id, quantity=1)
+            return obj, True
         else:
-            basket = basket.first()
+            obj = basket.first()
             product_count = Product.objects.filter(id=product_id).first().quantity
-            if basket.quantity + 1 <= product_count:
-                basket.quantity += 1
-                basket.save()
+            if obj.quantity + 1 <= product_count:
+                obj.quantity += 1
+                obj.save()
+                return obj, False
+            else:
+                return False, 'Is product max quantity'
 
     @classmethod
     def down_quantity(cls, product_id, user):

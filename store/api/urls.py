@@ -1,9 +1,14 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
 
-from api.views import ProductListSerializer
+from api.views import BasketModelViewSet, ProductModelViewSet
 
 app_name = 'api'
 
+router = routers.DefaultRouter()
+router.register(r'product', ProductModelViewSet)
+router.register(r'basket', BasketModelViewSet)
+
 urlpatterns = [
-    path('list-view/', ProductListSerializer.as_view(), name='list-view'),
+    path('', include(router.urls)),
 ]

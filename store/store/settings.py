@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import environ
 
 env = environ.Env(
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'rest_framework',
+    'rest_framework.authtoken',
 
     'home',
     'orders',
@@ -212,5 +214,8 @@ REDIS_PORT = env('REDIS_PORT')
 # Django REST framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 3
+    'PAGE_SIZE': 3,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
