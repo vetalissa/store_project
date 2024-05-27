@@ -26,6 +26,10 @@ class Order(models.Model):
     def __str__(self):
         return f'Заказ #{self.id}. {self.initiator}'
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
     def order_update_after_payment(self):
         baskets = Basket.object.filter(user=self.initiator)
         self.change_count(baskets)

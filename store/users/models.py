@@ -21,6 +21,10 @@ class EmailVerification(models.Model):
     def __str__(self):
         return f'EmailVerification object for {self.user.email}'
 
+    class Meta:
+        verbose_name = 'Код подтверждения почты'
+        verbose_name_plural = 'Коды подтверждения почты'
+
     def send_email_verification(self):
         link = reverse('users:email_verification', kwargs={'email': self.user.email, 'code': self.code})
         verification_link = f'{settings.DOMAIN_NAME}{link}'
