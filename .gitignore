@@ -5,3 +5,4 @@ user_image/
 .env
 *.sqlite3
 stripe
+__pycache__/
